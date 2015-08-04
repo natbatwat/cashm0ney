@@ -7,7 +7,9 @@ function preload() {
     game.load.image('paperplane', 'assets/paperplane.png');
 }
 
-var platforms;
+var board;
+var plane;
+var emitter;
 
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -15,21 +17,22 @@ function create() {
     
     plane = game.add.sprite(game.world.centerX, game.world.centerY, 'paperplane');
 
-    emitter = game.add.emitter(game.world.centerX, 0, 100);
-    emitter.makeParticles('banknote');
+    emitter = game.add.emitter(game.world.centerX, 0, 100); // creating emitter 
+    emitter.name = "money-maker"; // naming the emitter
+    emitter.makeParticles('banknote'); // use banknote image as particle
 
+    // emitter properties
     emitter.minParticleSpeed.setTo(-300, 30);
     emitter.maxParticleSpeed.setTo(300, 100);
     emitter.gravity = 50;
-
-    //  This will emit a quantity of 5 particles every 500ms. Each particle will live for 2000ms.
     emitter.flow(5000, 1000, 3, -1);
 
-    platforms = game.add.group();
-    platforms.enableBody = true;
+    board = game.add.group();
+    board.enableBody = true;
+    board.physicsBodyType = Phaser.Physics.ARCADE;
+
 
     game.input.addMoveCallback(move, this);
-
 }
 
 function move(pointer, x, y){
@@ -37,7 +40,10 @@ function move(pointer, x, y){
     plane.y = y;
 }
 
-function collectedMoney()
-
 function update() {
+    console.log(game.physics.arcade.collide(emitter, plane, collectedMoney, null, this))
+}
+
+function collectedMoney() {
+    console.log('BAM');
 }

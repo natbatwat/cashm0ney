@@ -1,7 +1,6 @@
 var gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     concat = require('gulp-concat'),
-    connect = require('gulp-connect'),
     imagemin = require('gulp-imagemin'), // image optimizer 
     livereload = require('gulp-livereload'), // use with livereload chrome extension
     minifycss = require('gulp-minify-css'),
@@ -13,17 +12,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     watch = require('gulp-watch');
 
-
-//Webserver (tested 16/6/15 OSX)
-gulp.task('connect', function() {
-    connect.server({
-        livereload: true,
-        port: 8888
-    });
-});
-
 //Sass
-// this task runs compression of all files, even unchanged ones (edit required)
 gulp.task('sass', function () {
     return sass('main.scss', {style: "compressed", sourcemap: true })
     .pipe(autoprefixer({
@@ -46,4 +35,4 @@ gulp.task('watch', function() {
 });
 
 // Default task
-gulp.task('default', ['connect', 'sass','watch']);
+gulp.task('default', ['sass','watch']);
