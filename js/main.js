@@ -12,6 +12,8 @@ var money;
 var plane;
 var emitter;
 var moneyText;
+var lastX = 0;
+var lastY = 0;
 
 function create() {
 
@@ -46,11 +48,13 @@ function create() {
 }
 
 function move(pointer, x, y){
-    plane.x = x;
-    plane.y = y;
+    lastX = x;
+    lastY = y;
+    updatePlanePosition(plane);
 }
 
 function update() {
+    updatePlanePosition(plane);
     game.physics.arcade.collide(emitter, plane, collectedMoney);
 }
 
@@ -59,4 +63,9 @@ function collectedMoney(plane, cash) {
     plane.animations.add('kaboom');
     money++;
     moneyText.setText("$" + money);
+}
+
+function updatePlanePosition(plane) {
+    plane.x = lastX;
+    plane.y = lastY;
 }
