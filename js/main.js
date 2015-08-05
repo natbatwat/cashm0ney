@@ -18,7 +18,7 @@ function create() {
     game.stage.backgroundColor = "#A6ECDF";
     
     money = 0;
-    moneyText = game.add.text(600, 550,'$0');
+    moneyText = game.add.text(600, 550,"$");
 
     plane = game.add.sprite(game.world.centerX, game.world.centerY, 'paperplane');
 
