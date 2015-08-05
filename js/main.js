@@ -14,25 +14,29 @@ var emitter;
 var moneyText;
 
 function create() {
+
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = "#A6ECDF";
     
     money = 0;
     moneyText = game.add.text(600, 550,"$");
 
+    // User cursor
     plane = game.add.sprite(game.world.centerX, game.world.centerY, 'paperplane');
+    plane.anchor.setTo(0.5, 0.5);
+    game.physics.arcade.enable(plane);
 
+    // Cash emitter 
     emitter = game.add.emitter(game.world.centerX, 0, 100); // creating emitter 
-    emitter.name = "money-maker"; // naming the emitter
-    emitter.makeParticles('banknote'); // use banknote image as particle
+    emitter.name = "money-maker";
+    emitter.makeParticles('banknote', true); // use banknote image as particle
 
-    // emitter properties
+    // Emitter properties
     emitter.minParticleSpeed.setTo(-300, 30);
     emitter.maxParticleSpeed.setTo(300, 100);
     emitter.gravity = 50;
     emitter.flow(5000, 1000, 3, -1);
 
-    game.physics.arcade.enable(plane);
 
     board = game.add.group();
     board.enableBody = true;
@@ -50,7 +54,9 @@ function update() {
     game.physics.arcade.collide(emitter, plane, collectedMoney);
 }
 
-function collectedMoney() {
+function collectedMoney(plane, cash) {
+    cash.kill();
+    plane.animations.add('kaboom');
     money++;
     moneyText.setText("$" + money);
 
