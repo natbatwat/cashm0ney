@@ -29,6 +29,7 @@ function create() {
     plane = game.add.sprite(game.world.centerX, game.world.centerY, 'paperplane');
     plane.anchor.setTo(0.5, 0.5);
     game.physics.arcade.enable(plane);
+    plane.body.moves = false;
 
     // Cash emitter 
     emitter = game.add.emitter(game.world.centerX, 0, 100); // creating emitter 
