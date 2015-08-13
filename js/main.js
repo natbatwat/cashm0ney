@@ -5,6 +5,7 @@ function preload() {
     game.load.image('fire', 'assets/fire.png');
     game.load.image('lab', 'assets/lab.png');
     game.load.image('paperplane', 'assets/paperplane.png');
+    game.load.audio('collectMoney', 'assets/collectMoney.mp3');
 }
 
 var board;
@@ -14,6 +15,7 @@ var emitter;
 var moneyText;
 var lastX = 0;
 var lastY = 0;
+var collectSFX;
 
 function create() {
 
@@ -27,6 +29,7 @@ function create() {
     plane = game.add.sprite(game.world.centerX, game.world.centerY, 'paperplane');
     plane.anchor.setTo(0.5, 0.5);
     game.physics.arcade.enable(plane);
+    plane.body.moves = false;
 
     // Cash emitter 
     emitter = game.add.emitter(game.world.centerX, 0, 100); // creating emitter 
@@ -45,6 +48,9 @@ function create() {
     board.physicsBodyType = Phaser.Physics.ARCADE;
 
     game.input.addMoveCallback(move, this);
+
+    collectSFX = game.add.audio('collectMoney');
+    collectSFX.allowMultiple = true;
 }
 
 function move(pointer, x, y){
@@ -63,6 +69,7 @@ function collectedMoney(plane, cash) {
     plane.animations.add('kaboom');
     money++;
     moneyText.setText("$" + money);
+    collectSFX.play();
 }
 
 function updatePlanePosition(plane) {
