@@ -66,7 +66,6 @@ function update() {
 
 function collectedMoney(plane, cash) {
     cash.kill();
-    plane.animations.add('kaboom');
     money++;
     moneyText.setText("$" + money);
     collectSFX.play();
